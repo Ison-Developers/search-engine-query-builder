@@ -19,6 +19,7 @@
   "directory" : "vendors",
   "dependencies": {
     "underscore": "*",
-    "qunit": "*"
+    "qunit": "*",
+    "requirejs": "*"
   }
 }
