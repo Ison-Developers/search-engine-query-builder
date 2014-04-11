@@ -16,7 +16,7 @@
     "test",
     "tests"
   ],
-  "directory" : "vendors",
+  "directory" : "libs",
   "dependencies": {
     "underscore": "*",
     "qunit": "*",
