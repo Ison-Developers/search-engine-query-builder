@@ -1,0 +1,23 @@
+{
+  "name": "search-engine-query-builder",
+  "version": "0.0.0",
+  "homepage": "https://github.com/Ison-Developers/search-engine-query-builder",
+  "authors": [
+    "Ison-Developers"
+  ],
+  "description": "A collection of adaptors for Ison search engine client",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "libs/",
+    "test",
+    "tests"
+  ],
+  "directory" : "vendors",
+  "dependencies": {
+    "underscore": "*"
+  }
+}
