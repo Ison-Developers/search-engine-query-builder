@@ -3,10 +3,11 @@ define([], function () {
 
   uri.defaultOptions = {
     scheme: 'http',
-    host: 'isondev.net'
+    host: 'isondev.net',
+    parameterBase: '?'
   };
 
-  uri.componentsOrder = ['scheme', 'username', 'password', 'host', 'port', 'path'];
+  uri.componentsOrder = ['scheme', 'username', 'password', 'host', 'port', 'path', 'parameterBase'];
 
   uri.schema = {
     scheme: '(^.^)://',
@@ -14,11 +15,9 @@ define([], function () {
     password: ':(^.^)@',
     host: '(^.^)',
     port: ':(^.^)',
-    path: '/(^.^)'
+    path: '/(^.^)',
+    parameterBase: '/(^.^)'
   }
 
-  // return function () {
-  //   return Object.create(defaultUriOptions);
-  // }
   return uri;
 });

@@ -1,6 +1,7 @@
 require.config({
   paths: {
-    underscore: '../../libs/underscore/underscore'
+    underscore: '../../libs/underscore/underscore',
+    solrSchema: '../../src/schemas/solr'
   },
   shim: {
     underscore: {
@@ -9,7 +10,15 @@ require.config({
   }
 });
 
-require(['../src/query-builder.js', 'underscore'], function (QueryBuilder) {
+require(['../src/query-builder.js', 'solrSchema', 'underscore'], function (QueryBuilder, solrSchema) {
+
+  var commonUriOptions = {
+    host: 'solr.myhost.com',
+    path: 'solr/select',
+    parameterBase: '?'
+  };
+
+  var solrSchema = solrSchema;
 
   module('Query builder basics');
 
@@ -80,12 +89,51 @@ require(['../src/query-builder.js', 'underscore'], function (QueryBuilder) {
   })
 
   test('path loads correctly', function () {
-    var uriOptions = {
-      host: 'solr.myhost.com',
-      path: 'solr/select'
-    };
-    var qb = new QueryBuilder.getInstance({}, uriOptions);
+    var qb = new QueryBuilder.getInstance({}, commonUriOptions);
     ok( /^http:\/\/solr\.myhost\.com\/solr\/select/.test(qb.make()), qb.make());
   })
+
+  test('parameter parameterBase', function () {
+    var qb = new QueryBuilder.getInstance({}, commonUriOptions);
+    ok( /^http:\/\/solr\.myhost\.com\/solr\/select\/\?/.test(qb.make()), qb.make());
+  })
+
+  test('pageSize parameter works', function () {
+    var options = { pageSize : 10 };
+    var qb = new QueryBuilder.getInstance(solrSchema, commonUriOptions);
+    ok( /rows=10/.test(qb.make(options)), qb.make(options));
+  })
+
+  test('Multiple parameters concatenated with "&"', function () {
+    var options = { pageSize : 10, startPage : 4 };
+    var qb = new QueryBuilder.getInstance(solrSchema, commonUriOptions);
+    ok( /&/.test(qb.make(options)), qb.make(options));
+  })
+
+  test('compelex query parameters work', function () {
+    var options = {
+      query: {
+        type: 'and',
+        value: 'This is my query'
+      }
+    };
+    var qb = new QueryBuilder.getInstance(solrSchema, commonUriOptions);
+    ok( /q=AND\(This is my query\)/.test(qb.make(options)), qb.make(options));
+  })
+
+  test('compelex query parameters work with normal query parameters', function () {
+    var options = {
+      query: {
+        type: 'and',
+        value: 'This is my query'
+      },
+      startPage: 10
+    };
+    var qb = new QueryBuilder.getInstance(solrSchema, commonUriOptions);
+    ok( /q=AND\(This is my query\)/.test(qb.make(options)), qb.make(options));
+    ok( /start=10/.test(qb.make(options)), qb.make(options));
+    ok( /&/.test(qb.make(options)), qb.make(options));
+  })
+
 
 });

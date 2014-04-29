@@ -1,12 +1,8 @@
 define([], function () {
-  var query = {};
-
-  query.defaultOptions = {
+  return {
     rows: 20,
     start: 0,
     query: 'This is my query',
     dataType: 'json'
   };
-
-  return query;
 });

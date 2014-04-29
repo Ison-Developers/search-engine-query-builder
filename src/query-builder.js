@@ -1,7 +1,8 @@
 require.config({
   paths: {
     underscore: '../../libs/underscore/underscore',
-    uri: '../../src/options/uri'
+    uri: '../../src/options/uri',
+    options: '../../src/options/query'
   },
   shim: {
     underscore: {
@@ -9,12 +10,12 @@ require.config({
     }
   }
 });
-define(['underscore', 'uri'], function (_, uri) {
+define(['underscore', 'uri', 'options'], function (_, uri, defaultOptions) {
 
   var getInstance = function (schema, uriOpts) {
+    var _this = this;
     this.schema = schema;
     this.uriOptions = {};
-    var _this = this;
 
     this.queryString = '';
     this.options = {};
@@ -22,7 +23,7 @@ define(['underscore', 'uri'], function (_, uri) {
 
     function makeUriComponents () {
       var output = '';
-      uriOptions = _.extend({}, uri.defaultOptions, uriOpts);
+      var uriOptions = _.extend({}, uri.defaultOptions, uriOpts);
       _.each(uri.componentsOrder, function (component, index) {
         if (uriOptions[component]) {
           output += uri.schema[component].
@@ -32,11 +33,34 @@ define(['underscore', 'uri'], function (_, uri) {
       return output;
     }
 
-    function makeQuery () {
+    function makeParameters () {
+      var output = [];
+      var opts = _.extend({}, defaultOptions, _this.options );
+      _.each(_this.options, function (opt, parameter) {
+        if (opt) {
+          var template = _this.schema[parameter];
+          if (typeof template == 'string') {
+            output.push(template.replace(_this.templatePlaceHolder, opt))
+          } else if (typeof template == 'object') {
+            if (opt.value) {
+              output.push(template.types[opt.type].replace(_this.templatePlaceHolder, opt.value))
+            }
+          }
+        }
+        // if (parameter) {
+        //   output +=
+        // }
+      })
+      return output.join('&');
+    }
+
+    function makeQuery (opt) {
+      _this.options = opt;
       _this.queryString = '';
       _this.queryString += makeUriComponents();
+      _this.queryString += makeParameters();
 
-      return _this.queryString;
+      return encodeURI(_this.queryString);
     }
 
     function updateUserOptions (opt) {
