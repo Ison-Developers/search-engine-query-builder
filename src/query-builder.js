@@ -1,7 +1,6 @@
 require.config({
   paths: {
     underscore: '../../libs/underscore/underscore',
-    uri: '../../src/options/uri',
     options: '../../src/options/query'
   },
   shim: {
@@ -10,8 +9,29 @@ require.config({
     }
   }
 });
-define(['underscore', 'uri', 'options'], function (_, uri, defaultOptions) {
+define(['underscore', 'options'], function (_, defaultOptions) {
+  /**
+   *  this is the default uri object, you can customize
+   *  it by passing a uri object to the getInstance method.
+   */
+  var uri = {};
+  uri.defaultOptions = {
+    scheme: 'http',
+    host: 'isondev.net',
+    parameterBase: '?'
+  };
+  uri.componentsOrder = ['scheme', 'username', 'password', 'host', 'port', 'path', 'parameterBase'];
+  uri.schema = {
+    scheme: '(^.^)://',
+    username: '(^.^)',
+    password: ':(^.^)@',
+    host: '(^.^)',
+    port: ':(^.^)',
+    path: '/(^.^)',
+    parameterBase: '/(^.^)'
+  }
 
+  //The actual code for the query builder
   var getInstance = function (schema, uriOpts) {
     var _this = this;
     this.schema = schema;
@@ -24,7 +44,7 @@ define(['underscore', 'uri', 'options'], function (_, uri, defaultOptions) {
     function makeUriComponents () {
       var output = '';
       var uriOptions = _.extend({}, uri.defaultOptions, uriOpts);
-      _.each(uri.componentsOrder, function (component, index) {
+      _.each(uri.componentsOrder, function (component) {
         if (uriOptions[component]) {
           output += uri.schema[component].
               replace(_this.templatePlaceHolder, uriOptions[component]);
@@ -47,9 +67,6 @@ define(['underscore', 'uri', 'options'], function (_, uri, defaultOptions) {
             }
           }
         }
-        // if (parameter) {
-        //   output +=
-        // }
       })
       return output.join('&');
     }
