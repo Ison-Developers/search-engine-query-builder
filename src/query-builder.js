@@ -66,19 +66,24 @@ define(['underscore'], function (_) {
       return output;
     }
 
+    function makeSingleParameter(template, opt) {
+      if (typeof template == 'string') {
+        return template.replace(_this.templatePlaceHolder, opt)
+      } else if (typeof template == 'object') {
+        if (opt.value) {
+          return template.types[opt.type].replace(_this.templatePlaceHolder, opt.value)
+        }
+      }
+    }
+
     function makeParameters () {
       var output = [];
       var opts = _.extend({}, defaultOptions, _this.options );
       _.each(_this.options, function (opt, parameter) {
         if (opt) {
+          //output.push(renderParameter(opt));
           var template = _this.schema[parameter];
-          if (typeof template == 'string') {
-            output.push(template.replace(_this.templatePlaceHolder, opt))
-          } else if (typeof template == 'object') {
-            if (opt.value) {
-              output.push(template.types[opt.type].replace(_this.templatePlaceHolder, opt.value))
-            }
-          }
+          output.push(makeSingleParameter(template, opt))
         }
       })
       return output.join('&');
