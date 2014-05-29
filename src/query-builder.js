@@ -66,14 +66,24 @@ define(['underscore'], function (_) {
       return output;
     }
 
+    function isValidTemplate(tmpl) {
+      if ( _.isString(tmpl) && tmpl.search(_this.templatePlaceHolder) ) {
+        return true;
+      } else if ( _.isObject(tmpl) && _.isObject(tmpl.types) ) {
+        return true;
+      }
+      return false;
+    }
+
     function makeSingleParameter(template, opt) {
-      if (typeof template === 'string') {
+      if ( _.isString(template) ) {
         return template.replace(_this.templatePlaceHolder, opt)
-      } else if (typeof template === 'object') {
+      } else if ( _.isObject(template) ) {
         if (opt.value) {
           return template.types[opt.type].replace(_this.templatePlaceHolder, opt.value)
         }
       }
+      throw new Error('none standard template passed in.');;
     }
 
     function makeParameters () {
@@ -81,11 +91,14 @@ define(['underscore'], function (_) {
       var opts = _.extend({}, defaultOptions, _this.options );
       _.each(_this.options, function (opt, parameter) {
         if (opt) {
-          //output.push(renderParameter(opt));
           var template = _this.schema[parameter];
-          output.push(makeSingleParameter(template, opt))
+          if (isValidTemplate(template)) {
+            output.push(makeSingleParameter(template, opt))
+          } else {
+            throw new Error('none standard template found in your schema!');
+          }
         }
-      })
+      });
       return output.join('&');
     }
 
