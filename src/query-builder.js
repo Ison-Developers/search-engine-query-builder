@@ -67,9 +67,9 @@ define(['underscore'], function (_) {
     }
 
     function makeSingleParameter(template, opt) {
-      if (typeof template == 'string') {
+      if (typeof template === 'string') {
         return template.replace(_this.templatePlaceHolder, opt)
-      } else if (typeof template == 'object') {
+      } else if (typeof template === 'object') {
         if (opt.value) {
           return template.types[opt.type].replace(_this.templatePlaceHolder, opt.value)
         }
