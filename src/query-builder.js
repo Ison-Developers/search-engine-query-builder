@@ -1,7 +1,6 @@
 require.config({
   paths: {
-    underscore: '../../libs/underscore/underscore',
-    options: '../../src/options/query'
+    underscore: '../../libs/underscore/underscore'
   },
   shim: {
     underscore: {
@@ -9,7 +8,7 @@ require.config({
     }
   }
 });
-define(['underscore', 'options'], function (_, defaultOptions) {
+define(['underscore'], function (_) {
   /**
    *  this is the default uri object, you can customize
    *  it by passing a uri object to the getInstance method.
@@ -29,9 +28,23 @@ define(['underscore', 'options'], function (_, defaultOptions) {
     port: ':(^.^)',
     path: '/(^.^)',
     parameterBase: '/(^.^)'
-  }
+  };
 
-  //The actual code for the query builder
+  /**
+   *  this is the default user options, you can customize
+   *  this by passing a new object into make query or update query
+   */
+  var defaultOptions = {
+    rows: 20,
+    start: 0,
+    query: 'This is my query',
+    dataType: 'json'
+  };
+
+
+  /**
+   * The actual code for the query builder
+   */
   var getInstance = function (schema, uriOpts) {
     var _this = this;
     this.schema = schema;
