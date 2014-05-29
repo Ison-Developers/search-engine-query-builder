@@ -118,7 +118,7 @@ require(['../src/query-builder.js', 'solrSchema', 'underscore'], function (Query
       }
     };
     var qb = new QueryBuilder.getInstance(solrSchema, commonUriOptions);
-    ok( /q=AND\(This is my query\)/.test(qb.make(options)), qb.make(options));
+    ok( /q=AND\(This%20is%20my%20query\)/.test(qb.make(options)), qb.make(options));
   })
 
   test('compelex query parameters work with normal query parameters', function () {
@@ -130,7 +130,7 @@ require(['../src/query-builder.js', 'solrSchema', 'underscore'], function (Query
       startPage: 10
     };
     var qb = new QueryBuilder.getInstance(solrSchema, commonUriOptions);
-    ok( /q=AND\(This is my query\)/.test(qb.make(options)), qb.make(options));
+    ok( /q=AND\(This%20is%20my%20query\)/.test(qb.make(options)), qb.make(options));
     ok( /start=10/.test(qb.make(options)), qb.make(options));
     ok( /&/.test(qb.make(options)), qb.make(options));
   })
