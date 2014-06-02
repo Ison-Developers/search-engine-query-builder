@@ -52,7 +52,7 @@ define(['underscore'], function (_) {
 
     this.queryString = '';
     this.options = {};
-    this.templatePlaceHolder = '(^.^)'
+    this.templatePlaceHolder = '(^.^)';
 
     function makeUriComponents () {
       var output = '';
@@ -77,13 +77,13 @@ define(['underscore'], function (_) {
 
     function makeSingleParameter(template, opt) {
       if ( _.isString(template) ) {
-        return template.replace(_this.templatePlaceHolder, opt)
+        return template.replace(_this.templatePlaceHolder, opt);
       } else if ( _.isObject(template) ) {
         if (opt.value) {
-          return template.types[opt.type].replace(_this.templatePlaceHolder, opt.value)
+          return template.types[opt.type].replace(_this.templatePlaceHolder, opt.value);
         }
       }
-      throw new Error('none standard template passed in.');;
+      throw new Error('none standard template passed in.');
     }
 
     function makeParameters () {
@@ -93,7 +93,7 @@ define(['underscore'], function (_) {
         if (opt) {
           var template = _this.schema[parameter];
           if (isValidTemplate(template)) {
-            output.push(makeSingleParameter(template, opt))
+            output.push(makeSingleParameter(template, opt));
           } else {
             throw new Error('none standard template found in your schema!');
           }
@@ -107,7 +107,6 @@ define(['underscore'], function (_) {
       _this.queryString = '';
       _this.queryString += makeUriComponents();
       _this.queryString += makeParameters();
-
       return encodeURI(_this.queryString);
     }
 
@@ -119,8 +118,8 @@ define(['underscore'], function (_) {
     return {
       update: updateUserOptions,
       make: makeQuery
-    }
-  }
+    };
+  };
 
-  return {getInstance: getInstance}
+  return {getInstance: getInstance};
 });
