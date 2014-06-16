@@ -2,3 +2,4 @@ vendors/*
 .idea
 libs/*
 notes.js
+*.swp

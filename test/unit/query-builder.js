@@ -22,7 +22,7 @@ require(['../src/query-builder.js', 'solrSchema', 'underscore'], function (Query
 
   test('QueryBuilder can be instantiated', function () {
     var qb = new QueryBuilder.getInstance();
-    ok(qb != null, 'passed');
+    ok(qb !== null, 'passed');
   });
 
   test('update method supports chaining.', function () {
