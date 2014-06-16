@@ -148,5 +148,8 @@ require(['../src/query-builder.js', 'solrSchema', 'underscore'], function (Query
     ok( /&/.test(qb.make(options)), qb.make(options));
   });
 
-
+  test('string can be passed as uri options', function () {
+    var qb = new QueryBuilder.getInstance(solrSchema, 'http://www.isondev.net');
+    equal( qb.make(), 'http://isondev.net' );
+  });
 });
