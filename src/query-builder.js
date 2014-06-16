@@ -55,6 +55,9 @@ define(['underscore'], function (_) {
     this.templatePlaceHolder = '(^.^)';
 
     function makeUriComponents () {
+      if ( typeof uriOpts === 'string') { 
+        return uriOpts;
+      }
       var output = '';
       var uriOptions = _.extend({}, uri.defaultOptions, uriOpts);
       _.each(uri.componentsOrder, function (component) {
