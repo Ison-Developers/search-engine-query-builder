@@ -21,7 +21,7 @@ create a schema like this:
   </code>
 </pre>
 
-Now that we have a schema, we can create a new instance of the query builder.
+<pre>(^.^)</pre> Is our place holder, We thing it is cool but you can change it if you want. Now that we have a schema, we can create a new instance of the query builder.
 
 <pre>
   <code>
