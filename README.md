@@ -7,7 +7,7 @@ You can create pretty much any query string you want. All you need to do is to c
 You can have optional parameters, you can have parameters that have different keys based on user options and you can create uri options programatically
 
 #2. Usage
-Include the query-builder.js in your application or web page.
+Include the query-builder.js in your application or web page. there is also query-builder-amd for people using an AMD loader.
 Now lest start by creating a small query builder instance. The first thing we need is a schema. A schema tells the query builder what parameters we will have in our query string.
 create a schema like this:
 
