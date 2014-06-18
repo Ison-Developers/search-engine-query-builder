@@ -45,7 +45,7 @@ define(['underscore'], function (_) {
   /**
    * The actual code for the query builder
    */
-  var getInstance = function (schema, uriOpts) {
+  var getInstance = function (uriOpts, schema) {
     var _this = this;
     this.schema = schema;
     this.uriOptions = {};

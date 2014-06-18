@@ -33,7 +33,7 @@ require(['../src/query-builder.js', 'solrSchema', 'underscore'], function (Query
 
   test('uri contains scheme', function () {
     var uriOptions = { scheme: 'https' };
-    var qb = new QueryBuilder.getInstance({}, uriOptions);
+    var qb = new QueryBuilder.getInstance(uriOptions, {});
     ok( /^https:\/\//.test(qb.make()) , qb.make());
   });
 
@@ -43,19 +43,19 @@ require(['../src/query-builder.js', 'solrSchema', 'underscore'], function (Query
       username: 'user',
       password: 'pass'
     };
-    var qb = new QueryBuilder.getInstance({}, uriOptions);
+    var qb = new QueryBuilder.getInstance(uriOptions, {});
     ok( /^https:\/\/user:pass/.test(qb.make()) , qb.make());
   });
 
   test('calling make multiple times will return the same thing', function () {
     var uriOptions = { scheme: 'https' };
-    var qb = new QueryBuilder.getInstance({}, uriOptions);
+    var qb = new QueryBuilder.getInstance(uriOptions, {});
     ok(qb.make() == qb.make(), qb.make());
   });
 
   test('query builder uses default uri options correctly', function () {
     var uriOptions = {username: 'user', password: 'pass'};
-    var qb = new QueryBuilder.getInstance({}, uriOptions);
+    var qb = new QueryBuilder.getInstance(uriOptions, {});
     ok( /^http:\/\/user:pass@/.test(qb.make()), qb.make());
   });
 
@@ -65,7 +65,7 @@ require(['../src/query-builder.js', 'solrSchema', 'underscore'], function (Query
       password: 'pass',
       host: 'solr.myhost.com'
     };
-    var qb = new QueryBuilder.getInstance({}, uriOptions);
+    var qb = new QueryBuilder.getInstance(uriOptions, {});
     ok( /^http:\/\/user:pass@solr.myhost.com/.test(qb.make()), qb.make());
   });
 
@@ -74,7 +74,7 @@ require(['../src/query-builder.js', 'solrSchema', 'underscore'], function (Query
       host: 'solr.myhost.com',
       port: '4545'
     };
-    var qb = new QueryBuilder.getInstance({}, uriOptions);
+    var qb = new QueryBuilder.getInstance(uriOptions, {});
     ok( /^http:\/\/solr\.myhost\.com:4545/.test(qb.make()), qb.make());
   });
 
@@ -82,17 +82,17 @@ require(['../src/query-builder.js', 'solrSchema', 'underscore'], function (Query
     var uriOptions = {
       host: 'solr.myhost.com'
     };
-    var qb = new QueryBuilder.getInstance({}, uriOptions);
+    var qb = new QueryBuilder.getInstance(uriOptions, {});
     ok( /^http:\/\/solr\.myhost\.com/.test(qb.make()), qb.make());
   });
 
   test('path loads correctly', function () {
-    var qb = new QueryBuilder.getInstance({}, commonUriOptions);
+    var qb = new QueryBuilder.getInstance(commonUriOptions, {});
     ok( /^http:\/\/solr\.myhost\.com\/solr\/select/.test(qb.make()), qb.make());
   });
 
   test('parameter parameterBase', function () {
-    var qb = new QueryBuilder.getInstance({}, commonUriOptions);
+    var qb = new QueryBuilder.getInstance(commonUriOptions, {});
     ok( /^http:\/\/solr\.myhost\.com\/solr\/select\/\?/.test(qb.make()), qb.make());
   });
 
@@ -100,8 +100,8 @@ require(['../src/query-builder.js', 'solrSchema', 'underscore'], function (Query
     throws(
       function () {
         var qb = new QueryBuilder.getInstance(
-          {noneStandardParameter: []},
-          {noneStandardParameter: 'value'}
+          {noneStandardParameter: 'value'},
+          {noneStandardParameter: []}
         );
 
         qb.make({noneStandardParameter: 'value'});
@@ -113,13 +113,13 @@ require(['../src/query-builder.js', 'solrSchema', 'underscore'], function (Query
 
   test('pageSize parameter works', function () {
     var options = { pageSize : 10 };
-    var qb = new QueryBuilder.getInstance(solrSchema, commonUriOptions);
+    var qb = new QueryBuilder.getInstance(commonUriOptions, solrSchema);
     ok( /rows=10/.test(qb.make(options)), qb.make(options));
   });
 
   test('Multiple parameters concatenated with "&"', function () {
     var options = { pageSize : 10, startPage : 4 };
-    var qb = new QueryBuilder.getInstance(solrSchema, commonUriOptions);
+    var qb = new QueryBuilder.getInstance(commonUriOptions, solrSchema);
     ok( /&/.test(qb.make(options)), qb.make(options));
   });
 
@@ -130,7 +130,7 @@ require(['../src/query-builder.js', 'solrSchema', 'underscore'], function (Query
         value: 'This is my query'
       }
     };
-    var qb = new QueryBuilder.getInstance(solrSchema, commonUriOptions);
+    var qb = new QueryBuilder.getInstance(commonUriOptions, solrSchema);
     ok( /q=AND\(This%20is%20my%20query\)/.test(qb.make(options)), qb.make(options));
   });
 
@@ -142,14 +142,14 @@ require(['../src/query-builder.js', 'solrSchema', 'underscore'], function (Query
       },
       startPage: 10
     };
-    var qb = new QueryBuilder.getInstance(solrSchema, commonUriOptions);
+    var qb = new QueryBuilder.getInstance(commonUriOptions, solrSchema);
     ok( /q=AND\(This%20is%20my%20query\)/.test(qb.make(options)), qb.make(options));
     ok( /start=10/.test(qb.make(options)), qb.make(options));
     ok( /&/.test(qb.make(options)), qb.make(options));
   });
 
   test('string can be passed as uri options', function () {
-    var qb = new QueryBuilder.getInstance(solrSchema, 'http://www.isondev.net');
+    var qb = new QueryBuilder.getInstance('http://www.isondev.net', solrSchema);
     equal( qb.make(), 'http://www.isondev.net' );
   });
 });
