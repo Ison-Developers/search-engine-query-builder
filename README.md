@@ -59,13 +59,13 @@ This should return a query string as fallow:
     <td>details</td>
   </tr>
   <tr>
-    <td>function/td>
+    <td>function</td>
     <td>getInstance</td>
     <td>(uriObject | uriString, schema)</td>
     <td>Uri can be also an string just to make it easier to quickly create an instance</td>
   </tr>
   <tr>
-    <td>function/td>
+    <td>function</td>
     <td>make</td>
     <td>optionsObject</td>
     <td>propeties of optionsObject is specified in your shema</td>
