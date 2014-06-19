@@ -106,7 +106,7 @@ define(['underscore'], function (_) {
     }
 
     function makeQuery (opt) {
-      _this.options = opt;
+      _this.options = _.extend({}, _this.options, opt);
       _this.queryString = '';
       _this.queryString += makeUriComponents();
       _this.queryString += makeParameters();

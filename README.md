@@ -21,7 +21,7 @@ create a schema like this:
   </code>
 </pre>
 
-<pre>(^.^)</pre> Is our place holder, We thing it is cool but you can change it if you want. Now that we have a schema, we can create a new instance of the query builder.
+<code>(^.^)</code> Is our place holder, We thing it is cool but you can change it if you want. Now that we have a schema, we can create a new instance of the query builder.
 
 <pre>
   <code>
@@ -41,10 +41,33 @@ In order to extract a query from this query generator we need to pass in some op
   </code>
 </pre>
 
-This should return a query string as fallows:
+This should return a query string as fallow:
 
 <pre>
   <code>
     http://isondev.net/search/q=some%20key%20word&rows=20&start=3
   </code>
 </pre>
+
+#3. API
+
+<table>
+  <tr>
+    <td>Type</td>
+    <td>Name</td>
+    <td>Paramerters</td>
+    <td>details</td>
+  </tr>
+  <tr>
+    <td>function/td>
+    <td>getInstance</td>
+    <td>(uriObject | uriString, schema)</td>
+    <td>Uri can be also an string just to make it easier to quickly create an instance</td>
+  </tr>
+  <tr>
+    <td>function/td>
+    <td>make</td>
+    <td>optionsObject</td>
+    <td>propeties of optionsObject is specified in your shema</td>
+  </tr>
+</table>

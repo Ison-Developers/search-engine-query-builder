@@ -152,4 +152,10 @@ require(['../src/query-builder.js', 'solrSchema', 'underscore'], function (Query
     var qb = new QueryBuilder.getInstance('http://www.isondev.net', solrSchema);
     equal( qb.make(), 'http://www.isondev.net' );
   });
+
+  test('make method can also update options', function () {
+    var qb = new QueryBuilder.getInstance(commonUriOptions, solrSchema);
+    equal( qb.make({startPage: 10}), 'http://solr.myhost.com/solr/select/?start=10');
+    equal( qb.make({pageSize: 30}), 'http://solr.myhost.com/solr/select/?start=10&rows=30');
+  });
 });
