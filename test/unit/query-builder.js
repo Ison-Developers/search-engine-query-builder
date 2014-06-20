@@ -1,7 +1,8 @@
 require.config({
   paths: {
     underscore: '../../libs/underscore/underscore',
-    solrSchema: '../../src/schemas/solr'
+    solrSchema: '../../src/schemas/solr',
+    especialSolrSchema: '../../src/schemas/especialSolrSchema'
   },
   shim: {
     underscore: {
@@ -10,7 +11,12 @@ require.config({
   }
 });
 
-require(['../src/query-builder.js', 'solrSchema', 'underscore'], function (QueryBuilder, solrSchema) {
+require([
+  '../src/query-builder.js',
+  'solrSchema',
+  'especialSolrSchema',
+  'underscore'
+  ], function (QueryBuilder, solrSchema, especialSolrSchema) {
 
   var commonUriOptions = {
     host: 'solr.myhost.com',
@@ -152,4 +158,19 @@ require(['../src/query-builder.js', 'solrSchema', 'underscore'], function (Query
     equal( qb.make({startPage: 10}), 'http://solr.myhost.com/solr/select/?start=10');
     equal( qb.make({pageSize: 30}), 'http://solr.myhost.com/solr/select/?start=10&rows=30');
   });
+
+  test('different place holders can be set via placeholder option', function () {
+    var qb1 = new QueryBuilder.getInstance(commonUriOptions, solrSchema);
+    var qb2 = new QueryBuilder.getInstance(commonUriOptions, especialSolrSchema, '(-.-)');
+    var options = {
+      query: {
+        type: 'and',
+        value: 'This is my query'
+      },
+      startPage: 10
+    };
+
+    equal( qb1.make(options), qb2.make(options));
+  });
+
 });
