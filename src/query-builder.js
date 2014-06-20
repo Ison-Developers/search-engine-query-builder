@@ -45,14 +45,14 @@ define(['underscore'], function (_) {
   /**
    * The actual code for the query builder
    */
-  var getInstance = function (uriOpts, schema) {
+  var getInstance = function (uriOpts, schema, placeHolder) {
     var _this = this;
     this.schema = schema;
     this.uriOptions = {};
 
     this.queryString = '';
     this.options = {};
-    this.templatePlaceHolder = '(^.^)';
+    this.templatePlaceHolder = placeHolder || '(^.^)';
 
     function makeUriComponents () {
       if ( typeof uriOpts === 'string') { 
@@ -63,7 +63,7 @@ define(['underscore'], function (_) {
       _.each(uri.componentsOrder, function (component) {
         if (uriOptions[component]) {
           output += uri.schema[component].
-              replace(_this.templatePlaceHolder, uriOptions[component]);
+              replace('(^.^)', uriOptions[component]);
         }
       });
       return output;
