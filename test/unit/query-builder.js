@@ -27,7 +27,7 @@ require([
   module('Query builder basics');
 
   test('QueryBuilder can be instantiated', function () {
-    var qb = new QueryBuilder.getInstance();
+    var qb = new QueryBuilder.getInstance(commonUriOptions, solrSchema);
     ok(qb !== null, 'passed');
   });
 
@@ -161,7 +161,7 @@ require([
 
   test('different place holders can be set via placeholder option', function () {
     var qb1 = new QueryBuilder.getInstance(commonUriOptions, solrSchema);
-    var qb2 = new QueryBuilder.getInstance(commonUriOptions, especialSolrSchema, '(-.-)');
+    var qb2 = new QueryBuilder.getInstance(commonUriOptions, especialSolrSchema);
     var options = {
       query: {
         type: 'and',
