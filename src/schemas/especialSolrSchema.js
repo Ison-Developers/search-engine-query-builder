@@ -1,5 +1,6 @@
 define([], function () {
   var schema = {
+    __placeholder: '(-.-)',
     query: {
       types: {
         and: 'q=AND((-.-))',
