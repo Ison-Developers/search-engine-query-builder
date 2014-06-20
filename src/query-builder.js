@@ -21,6 +21,7 @@ define(['underscore'], function (_) {
   };
   uri.componentsOrder = ['scheme', 'username', 'password', 'host', 'port', 'path', 'parameterBase'];
   uri.schema = {
+    __placeholder: '(^.^)',
     scheme: '(^.^)://',
     username: '(^.^)',
     password: ':(^.^)@',
@@ -45,14 +46,14 @@ define(['underscore'], function (_) {
   /**
    * The actual code for the query builder
    */
-  var getInstance = function (uriOpts, schema, placeHolder) {
+  var getInstance = function (uriOpts, schema) {
     var _this = this;
     this.schema = schema;
     this.uriOptions = {};
 
     this.queryString = '';
     this.options = {};
-    this.templatePlaceHolder = placeHolder || '(^.^)';
+    this.templatePlaceholder = schema.__placeholder || '(^.^)';
 
     function makeUriComponents () {
       if ( typeof uriOpts === 'string') { 
@@ -63,14 +64,14 @@ define(['underscore'], function (_) {
       _.each(uri.componentsOrder, function (component) {
         if (uriOptions[component]) {
           output += uri.schema[component].
-              replace('(^.^)', uriOptions[component]);
+              replace(uri.schema.__placeholder, uriOptions[component]);
         }
       });
       return output;
     }
 
     function isValidTemplate(tmpl) {
-      if ( _.isString(tmpl) && tmpl.search(_this.templatePlaceHolder) ) {
+      if ( _.isString(tmpl) && tmpl.search(_this.templatePlaceholder) ) {
         return true;
       } else if ( _.isObject(tmpl) && _.isObject(tmpl.types) ) {
         return true;
@@ -80,10 +81,10 @@ define(['underscore'], function (_) {
 
     function makeSingleParameter(template, opt) {
       if ( _.isString(template) ) {
-        return template.replace(_this.templatePlaceHolder, opt);
+        return template.replace(_this.templatePlaceholder, opt);
       } else if ( _.isObject(template) ) {
         if (opt.value) {
-          return template.types[opt.type].replace(_this.templatePlaceHolder, opt.value);
+          return template.types[opt.type].replace(_this.templatePlaceholder, opt.value);
         }
       }
       throw new Error('none standard template passed in.');
