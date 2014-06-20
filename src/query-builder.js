@@ -32,7 +32,7 @@ define(['underscore'], function (_) {
 
   /**
    *  this is the default user options, you can customize
-   *  this by passing a new object into make query or update query
+   *  this by passing a new object into make function
    */
   var defaultOptions = {
     rows: 20,
@@ -113,13 +113,7 @@ define(['underscore'], function (_) {
       return encodeURI(_this.queryString);
     }
 
-    function updateUserOptions (opt) {
-      _this.options = opt;
-      return this;
-    }
-
     return {
-      update: updateUserOptions,
       make: makeQuery
     };
   };

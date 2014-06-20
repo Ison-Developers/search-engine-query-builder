@@ -25,12 +25,6 @@ require(['../src/query-builder.js', 'solrSchema', 'underscore'], function (Query
     ok(qb !== null, 'passed');
   });
 
-  test('update method supports chaining.', function () {
-    var qb = new QueryBuilder.getInstance();
-    var chain = qb.update({a: 'a1'});
-    deepEqual(qb, chain, 'passed');
-  });
-
   test('uri contains scheme', function () {
     var uriOptions = { scheme: 'https' };
     var qb = new QueryBuilder.getInstance(uriOptions, {});
