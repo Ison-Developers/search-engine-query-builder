@@ -18,6 +18,14 @@ require([
   'underscore'
   ], function (QueryBuilder, solrSchema, especialSolrSchema) {
 
+  var commonOptions = {
+    query: {
+      type: 'and',
+      value: 'This is my query'
+    },
+    startPage: 10
+  };
+
   var commonUriOptions = {
     host: 'solr.myhost.com',
     path: 'solr/select',
@@ -171,6 +179,13 @@ require([
     };
 
     equal( qb1.make(options), qb2.make(options));
+  });
+
+  test('reset method deletes all previous options', function () {
+    var qbBase = new QueryBuilder.getInstance(commonUriOptions, solrSchema);
+    var qb1 = new QueryBuilder.getInstance(commonUriOptions, solrSchema);
+    qb1.make(commonOptions);
+    equal(qb1.reset().make(), qbBase.make());
   });
 
 });
