@@ -114,8 +114,14 @@ define(['underscore'], function (_) {
       return encodeURI(_this.queryString);
     }
 
+    function resetOptions () {
+      _this.options = {};
+      return this;
+    }
+
     return {
-      make: makeQuery
+      make: makeQuery,
+      reset: resetOptions
     };
   };
 
