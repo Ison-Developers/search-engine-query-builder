@@ -1,14 +1,4 @@
-require.config({
-  paths: {
-    underscore: '../../libs/underscore/underscore'
-  },
-  shim: {
-    underscore: {
-      exports: '_'
-    }
-  }
-});
-define(['underscore'], function (_) {
+define(function () {
   /**
    *  this is the default uri object, you can customize
    *  it by passing a uri object to the getInstance method.
@@ -72,18 +62,18 @@ define(['underscore'], function (_) {
     }
 
     function isValidTemplate(tmpl) {
-      if ( _.isString(tmpl) && tmpl.search(_this.templatePlaceholder) ) {
+      if ( typeof tmpl === 'string' && tmpl.search(_this.templatePlaceholder) ) {
         return true;
-      } else if ( _.isObject(tmpl) && _.isObject(tmpl.types) ) {
+      } else if ( typeof tmpl === 'object' && typeof tmpl.types === 'object' ) {
         return true;
       }
       return false;
     }
 
     function makeSingleParameter(template, opt) {
-      if ( _.isString(template) ) {
+      if ( typeof template === 'string' ) {
         return template.replace(_this.templatePlaceholder, opt);
-      } else if ( _.isObject(template) ) {
+      } else if ( typeof template === 'object' ) {
         if (opt.value) {
           return template.types[opt.type].replace(_this.templatePlaceholder, opt.value);
         }

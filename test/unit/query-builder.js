@@ -1,21 +1,14 @@
 require.config({
   paths: {
-    underscore: '../../libs/underscore/underscore',
     solrSchema: '../../src/schemas/solr',
     especialSolrSchema: '../../src/schemas/especialSolrSchema'
   },
-  shim: {
-    underscore: {
-      exports: '_'
-    }
-  }
 });
 
 require([
   '../src/query-builder.js',
   'solrSchema',
   'especialSolrSchema',
-  'underscore'
   ], function (QueryBuilder, solrSchema, especialSolrSchema) {
 
   var commonOptions = {
