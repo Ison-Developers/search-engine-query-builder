@@ -61,12 +61,13 @@ define(['underscore'], function (_) {
       }
       var output = '';
       var uriOptions = extend({}, uri.defaultOptions, uriOpts);
-      _.each(uri.componentsOrder, function (component) {
+      for( var i = 0; i <= uri.componentsOrder.length; i++) {
+        var component = uri.componentsOrder[i];
         if (uriOptions[component]) {
           output += uri.schema[component].
               replace(uri.schema.__placeholder, uriOptions[component]);
         }
-      });
+      }
       return output;
     }
 
@@ -93,16 +94,19 @@ define(['underscore'], function (_) {
     function makeParameters () {
       var output = [];
       var opts = extend({}, defaultOptions, _this.options );
-      _.each(_this.options, function (opt, parameter) {
-        if (opt) {
-          var template = _this.schema[parameter];
-          if (isValidTemplate(template)) {
-            output.push(makeSingleParameter(template, opt));
-          } else {
-            throw new Error('none standard template found in your schema!');
+      for ( var parameter in _this.options) {
+        if (_this.options.hasOwnProperty(parameter)) {
+          opt = _this.options[parameter];
+          if (opt) {
+            var template = _this.schema[parameter];
+            if (isValidTemplate(template)) {
+              output.push(makeSingleParameter(template, opt));
+            } else {
+              throw new Error('none standard template found in your schema!');
+            }
           }
         }
-      });
+      }
       return output.join('&');
     }
 
