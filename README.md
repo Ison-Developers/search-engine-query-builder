@@ -70,4 +70,13 @@ This should return a query string as fallow:
     <td>optionsObject</td>
     <td>propeties of optionsObject is specified in your shema</td>
   </tr>
+  <tr>
+    <td>function</td>
+    <td>reset</td>
+    <td></td>
+    <td>An easy way to remove all previous options form a query builder</td>
+  </tr>
 </table>
+
+#4. Changing placeholder
+In order to change the placeholder of your query builder pass in a shim with a field called <code>__placeholder </code> at it's root and you are done with it.
