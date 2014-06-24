@@ -18,7 +18,6 @@
   ],
   "directory" : "libs",
   "dependencies": {
-    "underscore": "*",
     "qunit": "*",
     "requirejs": "*"
   }
