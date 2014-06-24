@@ -60,7 +60,7 @@ define(['underscore'], function (_) {
         return uriOpts;
       }
       var output = '';
-      var uriOptions = _.extend({}, uri.defaultOptions, uriOpts);
+      var uriOptions = extend({}, uri.defaultOptions, uriOpts);
       _.each(uri.componentsOrder, function (component) {
         if (uriOptions[component]) {
           output += uri.schema[component].
@@ -92,7 +92,7 @@ define(['underscore'], function (_) {
 
     function makeParameters () {
       var output = [];
-      var opts = _.extend({}, defaultOptions, _this.options );
+      var opts = extend({}, defaultOptions, _this.options );
       _.each(_this.options, function (opt, parameter) {
         if (opt) {
           var template = _this.schema[parameter];
@@ -107,7 +107,7 @@ define(['underscore'], function (_) {
     }
 
     function makeQuery (opt) {
-      _this.options = _.extend({}, _this.options, opt);
+      _this.options = extend({}, _this.options, opt);
       _this.queryString = '';
       _this.queryString += makeUriComponents();
       _this.queryString += makeParameters();
@@ -117,6 +117,14 @@ define(['underscore'], function (_) {
     function resetOptions () {
       _this.options = {};
       return this;
+    }
+
+    function extend(){
+      for(var i=1; i<arguments.length; i++)
+      for(var key in arguments[i])
+      if(arguments[i].hasOwnProperty(key))
+        arguments[0][key] = arguments[i][key];
+      return arguments[0];
     }
 
     return {
