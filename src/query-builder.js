@@ -86,7 +86,7 @@ define(function () {
       var opts = extend({}, defaultOptions, _this.options );
       for ( var parameter in _this.options) {
         if (_this.options.hasOwnProperty(parameter)) {
-          opt = _this.options[parameter];
+          var opt = _this.options[parameter];
           if (opt) {
             var template = _this.schema[parameter];
             if (isValidTemplate(template)) {
